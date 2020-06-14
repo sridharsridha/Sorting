@@ -22,7 +22,7 @@ TEST_CASE("Benchmark random data", "[benchmark][random_data]") {
     // setup data for this run
     std::unordered_map<int, std::vector<int>> data;
     for (auto run = 0; run < meter.runs(); ++run) {
-      for (auto elm = 0; elm < static_cast<int>(num_elements); ++elm) {
+      for (auto elm = 0; elm < num_elements; ++elm) {
         data[run].push_back(dist(engine));
       }
     }
@@ -36,7 +36,7 @@ TEST_CASE("Benchmark random data", "[benchmark][random_data]") {
     // setup data for this run
     std::unordered_map<int, std::vector<int>> data;
     for (auto run = 0; run < meter.runs(); ++run) {
-      for (auto elm = 0; elm < static_cast<int>(num_elements); ++elm) {
+      for (auto elm = 0; elm < num_elements; ++elm) {
         data[run].push_back(dist(engine));
       }
     }
@@ -50,7 +50,7 @@ TEST_CASE("Benchmark random data", "[benchmark][random_data]") {
     // setup data for this run
     std::unordered_map<int, std::vector<int>> data;
     for (auto run = 0; run < meter.runs(); ++run) {
-      for (auto elm = 0; elm < static_cast<int>(num_elements); ++elm) {
+      for (auto elm = 0; elm < num_elements; ++elm) {
         data[run].push_back(dist(engine));
       }
     }
@@ -65,7 +65,7 @@ TEST_CASE("Benchmark random data", "[benchmark][random_data]") {
     // setup data for this run
     std::unordered_map<int, std::vector<int>> data;
     for (auto run = 0; run < meter.runs(); ++run) {
-      for (auto elm = 0; elm < static_cast<int>(num_elements); ++elm) {
+      for (auto elm = 0; elm < num_elements; ++elm) {
         data[run].push_back(dist(engine));
       }
     }
@@ -81,7 +81,7 @@ TEST_CASE("Benchmark sorted (ascending) data", "[benchmark][sorted_data]") {
     // setup data for this run
     std::unordered_map<int, std::vector<int>> data;
     for (auto run = 0; run < meter.runs(); ++run) {
-      for (auto elm = 0; elm < static_cast<int>(num_elements); ++elm) {
+      for (auto elm = 0; elm < num_elements; ++elm) {
         data[run].push_back(elm);
       }
     }
@@ -95,7 +95,7 @@ TEST_CASE("Benchmark sorted (ascending) data", "[benchmark][sorted_data]") {
     // setup data for this run
     std::unordered_map<int, std::vector<int>> data;
     for (auto run = 0; run < meter.runs(); ++run) {
-      for (auto elm = 0; elm < static_cast<int>(num_elements); ++elm) {
+      for (auto elm = 0; elm < num_elements; ++elm) {
         data[run].push_back(elm);
       }
     }
@@ -109,7 +109,7 @@ TEST_CASE("Benchmark sorted (ascending) data", "[benchmark][sorted_data]") {
     // setup data for this run
     std::unordered_map<int, std::vector<int>> data;
     for (auto run = 0; run < meter.runs(); ++run) {
-      for (auto elm = 0; elm < static_cast<int>(num_elements); ++elm) {
+      for (auto elm = 0; elm < num_elements; ++elm) {
         data[run].push_back(elm);
       }
     }
@@ -124,7 +124,7 @@ TEST_CASE("Benchmark sorted (ascending) data", "[benchmark][sorted_data]") {
     // setup data for this run
     std::unordered_map<int, std::vector<int>> data;
     for (auto run = 0; run < meter.runs(); ++run) {
-      for (auto elm = 0; elm < static_cast<int>(num_elements); ++elm) {
+      for (auto elm = 0; elm < num_elements; ++elm) {
         data[run].push_back(elm);
       }
     }
@@ -140,7 +140,7 @@ TEST_CASE("Benchmark sorted (descending) data", "[benchmark][sorted_data]") {
     // setup data for this run
     std::unordered_map<int, std::vector<int>> data;
     for (auto run = 0; run < meter.runs(); ++run) {
-      for (auto elm = static_cast<int>(num_elements); elm > 0; --elm) {
+      for (auto elm = num_elements; elm > 0; --elm) {
         data[run].push_back(elm);
       }
     }
@@ -154,7 +154,7 @@ TEST_CASE("Benchmark sorted (descending) data", "[benchmark][sorted_data]") {
     // setup data for this run
     std::unordered_map<int, std::vector<int>> data;
     for (auto run = 0; run < meter.runs(); ++run) {
-      for (auto elm = static_cast<int>(num_elements); elm > 0; --elm) {
+      for (auto elm = num_elements; elm > 0; --elm) {
         data[run].push_back(elm);
       }
     }
@@ -168,7 +168,7 @@ TEST_CASE("Benchmark sorted (descending) data", "[benchmark][sorted_data]") {
     // setup data for this run
     std::unordered_map<int, std::vector<int>> data;
     for (auto run = 0; run < meter.runs(); ++run) {
-      for (auto elm = static_cast<int>(num_elements); elm > 0; --elm) {
+      for (auto elm = num_elements; elm > 0; --elm) {
         data[run].push_back(elm);
       }
     }
@@ -183,7 +183,7 @@ TEST_CASE("Benchmark sorted (descending) data", "[benchmark][sorted_data]") {
     // setup data for this run
     std::unordered_map<int, std::vector<int>> data;
     for (auto run = 0; run < meter.runs(); ++run) {
-      for (auto elm = static_cast<int>(num_elements); elm > 0; --elm) {
+      for (auto elm = num_elements; elm > 0; --elm) {
         data[run].push_back(elm);
       }
     }

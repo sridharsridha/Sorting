@@ -1,11 +1,6 @@
 # Sorting
 
 [![codecov](https://codecov.io/gh/sridharsridha/sorting/branch/master/graph/badge.svg)](https://codecov.io/gh/sridharsridha/sorting)
-
-[![Build Status](https://travis-ci.org/sridharsridha/sorting.svg?branch=master)](https://travis-ci.org/sridharsridha/sorting)
-
-[![Build status](https://ci.appveyor.com/api/projects/status/ro4lbfoa7n0sy74c/branch/master?svg=true)](https://ci.appveyor.com/project/sridharsridha/Sorting/branch/master)
-
 ![CMake](https://github.com/sridharsridha/sorting/workflows/CMake/badge.svg)
 
 Sorting algorithms in C Cpp and Python with performance measurements
