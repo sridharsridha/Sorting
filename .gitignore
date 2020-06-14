@@ -42,3 +42,5 @@ gen
 *.app
 
 /cmake-build-debug/
+/.clangd/
+compile_commands.json
