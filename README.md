@@ -1,7 +1,9 @@
 # Sorting
 
+![Cmake](https://github.com/sridharsridha/sorting/workflows/CMake/badge.svg)
 [![codecov](https://codecov.io/gh/sridharsridha/sorting/branch/master/graph/badge.svg)](https://codecov.io/gh/sridharsridha/sorting)
-![CMake](https://github.com/sridharsridha/sorting/workflows/CMake/badge.svg)
+![language](https://img.shields.io/github/languages/top/sridharsridha/Sorting)
+[![GitHub license](https://img.shields.io/github/license/sridharsridha/Sorting?style=plastic)](https://github.com/sridharsridha/Sorting/blob/master/LICENSE)
 
 Sorting algorithms in C Cpp and Python with performance measurements
 
