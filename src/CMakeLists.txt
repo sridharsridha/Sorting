@@ -1,5 +1,7 @@
-# Generic test that uses conan libs
-add_executable(intro main.cpp)
-target_link_libraries(
-  intro PRIVATE project_options project_warnings CONAN_PKG::docopt.cpp
-                CONAN_PKG::fmt CONAN_PKG::spdlog)
+add_library(SortingLib INTERFACE)
+add_library(SortingLib::SortingLib ALIAS SortingLib)
+
+target_include_directories(SortingLib INTERFACE include/)
+
+# Use project options and project warning defined in top level cmake file
+target_link_libraries(SortingLib INTERFACE project_options project_warnings)

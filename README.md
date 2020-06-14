@@ -1,25 +1,14 @@
-# cpp_starter_project
+# Sorting
 
-[![codecov](https://codecov.io/gh/sridharsridha/cpp_starter_project/branch/master/graph/badge.svg)](https://codecov.io/gh/sridharsridha/cpp_starter_project)
+[![codecov](https://codecov.io/gh/sridharsridha/sorting/branch/master/graph/badge.svg)](https://codecov.io/gh/sridharsridha/sorting)
 
-[![Build Status](https://travis-ci.org/sridharsridha/cpp_starter_project.svg?branch=master)](https://travis-ci.org/sridharsridha/cpp_starter_project)
+[![Build Status](https://travis-ci.org/sridharsridha/sorting.svg?branch=master)](https://travis-ci.org/sridharsridha/sorting)
 
-[![Build status](https://ci.appveyor.com/api/projects/status/ro4lbfoa7n0sy74c/branch/master?svg=true)](https://ci.appveyor.com/project/sridharsridha/cpp-starter-project/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/ro4lbfoa7n0sy74c/branch/master?svg=true)](https://ci.appveyor.com/project/sridharsridha/Sorting/branch/master)
 
-![CMake](https://github.com/sridharsridha/cpp_starter_project/workflows/CMake/badge.svg)
+![CMake](https://github.com/sridharsridha/sorting/workflows/CMake/badge.svg)
 
-
-## Getting Started
-
-### Use the Github template
-First, click the green `Use this template` button near the top of this page.
-This will take you to Github's ['Generate Repository'](https://github.com/sridharsridha/cpp_starter_project/generate) page. 
-Fill in a repository name and short description, and click 'Create repository from template'. 
-This will allow you to create a new repository in your Github account, 
-prepopulated with the contents of this project. 
-Now you can clone the project locally and get to work!
-
-    $ git clone https://github.com/<user>/<your_new_repo>.git
+Sorting algorithms in C Cpp and Python with performance measurements
 
 ## Dependencies
 
@@ -92,7 +81,7 @@ If you continue to have trouble with your Conan dependencies, you can try
 clearing your Conan cache:
 
     $ conan remove -f '*'
-    
+
 The next time you run `cmake` or `cmake --build`, your Conan dependencies will
 be rebuilt. If you aren't using your system's default compiler, don't forget to 
 set the CC, CXX, CMAKE_C_COMPILER, and CMAKE_CXX_COMPILER variables, as 

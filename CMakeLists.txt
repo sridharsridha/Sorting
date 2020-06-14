@@ -1,7 +1,11 @@
 cmake_minimum_required(VERSION 3.16)
 
 # Set the project name to your project name, my project isn't very descriptive
-project(myproject CXX)
+project(
+  Sorting
+  VERSION 1.0.0
+  LANGUAGES C CXX
+  DESCRIPTION "Sorting algorithms analysis on C Cpp and Python")
 include(cmake/StandardProjectSettings.cmake)
 
 # Link this 'library' to set the c++ standard / compile-time options requested
@@ -40,6 +44,7 @@ include(cmake/StaticAnalyzers.cmake)
 
 option(BUILD_SHARED_LIBS "Enable compilation of shared libraries" OFF)
 option(ENABLE_TESTING "Enable Test Builds" ON)
+option(ENABLE_BENCHMARK "Enable Benchmarking Builds" ON)
 
 # Very basic PCH example
 option(ENABLE_PCH "Enable Precompiled Headers" OFF)
@@ -65,6 +70,13 @@ if(ENABLE_TESTING)
     "Building Tests. Be sure to check out test/constexpr_tests for constexpr testing"
   )
   add_subdirectory(test)
+endif()
+
+if(ENABLE_BENCHMARK)
+  message(
+    "Building benchmarks. Be sure to check out bench/benchmark* for testing"
+  )
+  add_subdirectory(bench)
 endif()
 
 add_subdirectory(src)
