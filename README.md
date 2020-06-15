@@ -3,27 +3,30 @@
 [![codecov](https://codecov.io/gh/sridharsridha/sorting/branch/master/graph/badge.svg)](https://codecov.io/gh/sridharsridha/sorting)
 ![CMake](https://github.com/sridharsridha/sorting/workflows/CMake/badge.svg)
 
-Sorting algorithms in C Cpp and Python with performance measurements
+Sorting algorithms implementation using C++ template metaprogramming as a headonly
+library. Benchmarking of these algorithms are performed using Catch2 benchmark and
+google benchmarks.
 
 ## Dependencies
 
 1. A C++ compiler that supports C++17. 
-See [cppreference.com](https://en.cppreference.com/w/cpp/compiler_support)
+See [cppreference.com][cppreference.com]
 to see which features are supported by each compiler.
 The following compilers should work:
-  * [gcc 7+](https://gcc.gnu.org/)
-  * [clang 6+](https://clang.llvm.org/)
-  * [Visual Studio 2017](https://visualstudio.microsoft.com/) or higher. 
+  * [gcc 7+][gcc]
+  * [clang 6+][clang]
   The minimum compiler version is 19.15; this version ships with version 15.8 of the IDE. 
-2. [Conan](https://conan.io/) - it's recommended that you install using 
-[pip](https://pip.pypa.io/en/stable/) 
-3. [CMake 3.15+](https://cmake.org/)
+2. [Conan][conan] - it's recommended that you install using 
+[pip][pip]
+3. [CMake 3.15+][cmake]
 
 ## Build Instructions
 
 ### Make a build directory
 
-    $ mkdir build && cd build
+```bash
+$ mkdir build && cd build
+```
 
 ### Configure your build
 
@@ -31,7 +34,9 @@ To configure the project and write makefiles, you could use `cmake` with a
 bunch of command line options. The easier option is to run cmake interactively,
 with the Cmake Curses Dialog Command Line tool:  
 
-    $ ccmake ..
+```bash
+$ ccmake ..
+```
 
 Once `ccmake` has finished setting up, press 'c' to configure the project, 
 press 'g' to generate, and 'q' to quit.
@@ -40,7 +45,9 @@ press 'g' to generate, and 'q' to quit.
 Once you have selected all the options you would like to use, you can build the 
 project:
 
-    $ cmake --build .   # build all targets
+```bash
+$ cmake --build .   # build all targets
+```
 
 ### Build using an alternate compiler
 
@@ -55,64 +62,190 @@ CMake targets with a different compiler, the project may fail to build.
 
 To build using clang, you can use these commands:
 
-    $ CC=clang CXX=clang++ ccmake ..
-    $ CC=clang CXX=clang++ cmake --build .
+```bash
+$ CC=clang CXX=clang++ ccmake ..
+$ CC=clang CXX=clang++ cmake --build .
+```
+
+## Running tests
+
+After building to run the unit-tests
+
+```bash
+$ cd build
+$ ctest
+```
+
+## Running benchmarks
+
+Two benchmarks are used here one is using [catch2]() framework and another using [google
+benchmark](),
+
+### Running Catch2 Benchmark
+
+```bash
+$ cd build/bin
+$ ./benchmark_catch --size=1000 
+```
+
+The command output will look like below
+
+```bash
+Dataset size is set as: 1000
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+benchmark_catch is a Catch v2.11.0 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+Benchmark random data
+-------------------------------------------------------------------------------
+/Users/sridharn/code/github/repro/Sorting/bench/benchmark_catch.cpp:16
+...............................................................................
+
+benchmark name                                  samples       iterations    estimated
+                                                mean          low mean      high mean
+                                                std dev       low std dev   high std dev
+-------------------------------------------------------------------------------
+Bubble Sort                                               100             1    62.3915 ms
+                                                   500.924 us    498.744 us    503.896 us
+                                                    12.897 us     10.065 us     19.631 us
+
+Selection Sort                                            100             1    61.6541 ms
+                                                   503.346 us    500.454 us    508.824 us
+                                                    19.579 us     10.914 us     32.169 us
+
+std::sort Sort                                            100             1     30.337 ms
+                                                    36.249 us     35.664 us     37.697 us
+                                                     4.197 us        564 ns      7.754 us
+
+std::stable_sort Sort                                     100             1    29.7788 ms
+                                                    34.723 us     34.645 us     34.802 us
+                                                       398 ns        350 ns        461 ns
+
+
+-------------------------------------------------------------------------------
+Benchmark sorted (ascending) data
+-------------------------------------------------------------------------------
+/Users/sridharn/code/github/repro/Sorting/bench/benchmark_catch.cpp:79
+...............................................................................
+
+benchmark name                                  samples       iterations    estimated
+                                                mean          low mean      high mean
+                                                std dev       low std dev   high std dev
+-------------------------------------------------------------------------------
+Bubble Sort                                               100             1    27.6108 ms
+                                                       973 ns        962 ns        999 ns
+                                                        83 ns         47 ns        165 ns
+
+Selection Sort                                            100             1    32.2752 ms
+                                                       972 ns        962 ns        994 ns
+                                                        72 ns         40 ns        143 ns
+
+std::sort Sort                                            100             1    32.0701 ms
+                                                      1.56 us      1.547 us      1.623 us
+                                                       126 ns          9 ns        300 ns
+
+std::stable_sort Sort                                     100             1     32.149 ms
+                                                      3.37 us      3.354 us      3.426 us
+                                                       134 ns         43 ns        303 ns
+
+
+-------------------------------------------------------------------------------
+Benchmark sorted (descending) data
+-------------------------------------------------------------------------------
+/Users/sridharn/code/github/repro/Sorting/bench/benchmark_catch.cpp:138
+...............................................................................
+
+benchmark name                                  samples       iterations    estimated
+                                                mean          low mean      high mean
+                                                std dev       low std dev   high std dev
+-------------------------------------------------------------------------------
+Bubble Sort                                               100             1    78.8413 ms
+                                                   647.712 us    647.084 us    648.826 us
+                                                     4.181 us      2.632 us      6.281 us
+
+Selection Sort                                            100             1    74.8978 ms
+                                                   650.134 us    637.343 us    682.168 us
+                                                    94.453 us     24.225 us    168.523 us
+
+std::sort Sort                                            100             1    36.0463 ms
+                                                     3.589 us      3.379 us      4.121 us
+                                                     1.498 us        154 ns      2.768 us
+
+std::stable_sort Sort                                     100             1    32.3432 ms
+                                                    19.657 us     19.314 us     21.275 us
+                                                     3.222 us         52 ns      7.671 us
+
+
+===============================================================================
+test cases: 3 | 3 passed
+assertions: - none -
+```
+
+### Running google benchmark
+
+```bash
+cd build/bin
+./benchmark_googlebench
+```
+
+The output will look like
+
+```bash
+Running ./benchmark_googlebench
+Run on (4 X 2300 MHz CPU s)
+CPU Caches:
+  L1 Data 32K (x2)
+  L1 Instruction 32K (x2)
+  L2 Unified 262K (x2)
+  L3 Unified 4194K (x1)
+Load Average: 2.26, 2.32, 2.13
+-----------------------------------------------------------------------
+Benchmark                             Time             CPU   Iterations
+-----------------------------------------------------------------------
+BM_BaseInt/65536                1104402 ns      1100765 ns          614
+BM_SortInt/65536                4910653 ns      4886486 ns          144
+BM_StableSortInt/65536          5332557 ns      5304077 ns          130
+BM_BubbleSortInt/65536       5955655641 ns   5921828000 ns            1
+BM_SelectionSortInt/65536    5602074163 ns   5572168000 ns            1
+BM_BaseStruct/65536             1124900 ns      1120069 ns          624
+BM_SortStruct/65536             4983121 ns      4973862 ns          138
+BM_StableSortStruct/65536       5638990 ns      5629844 ns          122
+BM_BubbleSortStruct/65536    7141038223 ns   7104419000 ns            1
+BM_SelectionSortStruct/65536 1367835150 ns   1364836000 ns            1
+
+```
 
 ## Troubleshooting
+If you encounter any issue when trying to build the cmake project, check the
+[troubleshooting][troubleshoot] section.
 
-### Update Conan
-Many problems that users have can be resolved by updating Conan, so if you are 
-having any trouble with this project, you should start by doing that.
+## Contributing
+Feedback and feature requests are appreciated. Bug reports and pull requestsare very welcome.
+Check the [Contributing Guidelines][ contributing] for how to write a feature request, post an issue and/or submit a pull request.
 
-To update conan: 
+## License
+Sorting is licensed under the [MIT license][license].  Copyright (c) 2020 Sridhar Nagarajan.
 
-    $ pip install --user --upgrade conan 
+## Testing frameworks
+[Catch2 tutorial][catch2]
 
-You may need to use `pip3` instead of `pip` in this command, depending on your 
-platform.
+## Benchmarking frameworks
+[Catch2 benmarking tutorial][catch2-benchmark]
+[Google Benchmark][google-benchmark]
 
-### Clear Conan cache
-If you continue to have trouble with your Conan dependencies, you can try 
-clearing your Conan cache:
 
-    $ conan remove -f '*'
-
-The next time you run `cmake` or `cmake --build`, your Conan dependencies will
-be rebuilt. If you aren't using your system's default compiler, don't forget to 
-set the CC, CXX, CMAKE_C_COMPILER, and CMAKE_CXX_COMPILER variables, as 
-described in the 'Build using an alternate compiler' section above.
-
-### Identifying misconfiguration of Conan dependencies
-
-If you have a dependency 'A' that requires a specific version of another 
-dependency 'B', and your project is trying to use the wrong version of 
-dependency 'B', Conan will produce warnings about this configuration error 
-when you run CMake. These warnings can easily get lost between a couple 
-hundred or thousand lines of output, depending on the size of your project. 
-
-If your project has a Conan configuration error, you can use `conan info` to 
-find it. `conan info` displays information about the dependency graph of your 
-project, with colorized output in some terminals.
-
-    $ cd build
-    $ conan info .
-
-In my terminal, the first couple lines of `conan info`'s output show all of the
-project's configuration warnings in a bright yellow font. 
-
-For example, the package `spdlog/1.5.0` depends on the package `fmt/6.1.2`.
-If you were to modify the file `cmake/Conan.cmake` so that it requires an 
-earlier version of `fmt`, such as `fmt/6.0.0`, and then run:
-
-    $ conan remove -f '*'       # clear Conan cache
-    $ rm -rf build              # clear previous CMake build
-    $ mkdir build && cd build
-    $ cmake ..                  # rebuild Conan dependencies
-    $ conan info .
-
-...the first line of output would be a warning that `spdlog` needs a more recent
-version of `fmt`.
-
-## Testing
-See [Catch2 tutorial](https://github.com/catchorg/Catch2/blob/master/docs/tutorial.md)
+[cppreference.com]: https://en.cppreference.com/w/cpp/compiler_support
+[gcc]: https://gcc.gnu.org/
+[clang]: https://clang.llvm.org/
+[conan]: https://conan.io/
+[pip]: https://pip.pypa.io/en/stable/
+[cmake]: https://cmake.org/
+[catch2]: (https://github.com/catchorg/Catch2/blob/master/docs/tutorial.md)
+[catch2-benchmark]: https://github.com/catchorg/Catch2/blob/master/docs/benchmarks.md
+[google-benchmark]: https://github.com/google/benchmark#usage
+[troubleshoot]: ./TROUBLESHOOTING.md
+[contributing]: ./CONTRIBUTING.md
+[license]: ./LICENSE
 
