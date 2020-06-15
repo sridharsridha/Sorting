@@ -251,10 +251,13 @@ Check the [Contributing Guidelines][ contributing] for how to write a feature re
 Sorting is licensed under the [MIT license][license].  Copyright (c) 2020 Sridhar Nagarajan.
 
 ## Testing frameworks
+
 [Catch2 tutorial][catch2]
 
 ## Benchmarking frameworks
+
 [Catch2 benmarking tutorial][catch2-benchmark]
+
 [Google Benchmark][google-benchmark]
 
 
