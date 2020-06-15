@@ -45,17 +45,15 @@ std::stable_sort Sort                          100             1    150.252 us
 ```
 
 ## Dependencies
-
-1. A C++ compiler that supports C++17. 
-See [cppreference.com][cppreference.com]
-to see which features are supported by each compiler.
+A C++ compiler that supports C++17.  See [cppreference.com][cppreference.com] to see which features are supported by each compiler.
 The following compilers should work:
   * [gcc 7+][gcc]
   * [clang 6+][clang]
   The minimum compiler version is 19.15; this version ships with version 15.8 of the IDE. 
-2. [Conan][conan] - it's recommended that you install using 
-[pip][pip]
-3. [CMake 3.15+][cmake]
+
+[Conan][conan] - it's recommended that you install using [pip][pip]
+
+[CMake 3.15+][cmake]
 
 ## Build Instructions
 
