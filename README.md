@@ -10,6 +10,40 @@ Sorting algorithms implementation using C++ template metaprogramming as a headon
 library. Benchmarking of these algorithms are performed using Catch2 benchmark and
 google benchmarks.
 
+```bash
+Dataset size is set as: 10000
+
+Benchmark random data
+-------------------------------------------------------------------------------
+benchmark name                            samples    iterations          mean
+-------------------------------------------------------------------------------
+Bubble Sort                                    100             1     46.285 ms
+Selection Sort                                 100             1    47.3573 ms
+std::sort Sort                                 100             1    475.706 us
+std::stable_sort Sort                          100             1    499.681 us
+-------------------------------------------------------------------------------
+
+Benchmark sorted (ascending) data
+-------------------------------------------------------------------------------
+benchmark name                            samples    iterations          mean
+-------------------------------------------------------------------------------
+Bubble Sort                                    100             1      7.045 us
+Selection Sort                                 100             1      6.475 us
+std::sort Sort                                 100             1     12.262 us
+std::stable_sort Sort                          100             1     50.565 us
+-------------------------------------------------------------------------------
+
+Benchmark sorted (descending) data
+-------------------------------------------------------------------------------
+benchmark name                            samples    iterations          mean
+-------------------------------------------------------------------------------
+Bubble Sort                                    100             1    65.8264 ms
+Selection Sort                                 100             1    67.2234 ms
+std::sort Sort                                 100             1     31.215 us
+std::stable_sort Sort                          100             1    150.252 us
+-------------------------------------------------------------------------------
+```
+
 ## Dependencies
 
 1. A C++ compiler that supports C++17. 
@@ -96,16 +130,9 @@ The command output will look like below
 ```bash
 Dataset size is set as: 1000
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-benchmark_catch is a Catch v2.11.0 host application.
-Run with -? for options
-
 -------------------------------------------------------------------------------
 Benchmark random data
 -------------------------------------------------------------------------------
-/Users/sridharn/code/github/repro/Sorting/bench/benchmark_catch.cpp:16
-...............................................................................
-
 benchmark name                                  samples       iterations    estimated
                                                 mean          low mean      high mean
                                                 std dev       low std dev   high std dev
@@ -130,9 +157,6 @@ std::stable_sort Sort                                     100             1    2
 -------------------------------------------------------------------------------
 Benchmark sorted (ascending) data
 -------------------------------------------------------------------------------
-/Users/sridharn/code/github/repro/Sorting/bench/benchmark_catch.cpp:79
-...............................................................................
-
 benchmark name                                  samples       iterations    estimated
                                                 mean          low mean      high mean
                                                 std dev       low std dev   high std dev
@@ -157,9 +181,6 @@ std::stable_sort Sort                                     100             1     
 -------------------------------------------------------------------------------
 Benchmark sorted (descending) data
 -------------------------------------------------------------------------------
-/Users/sridharn/code/github/repro/Sorting/bench/benchmark_catch.cpp:138
-...............................................................................
-
 benchmark name                                  samples       iterations    estimated
                                                 mean          low mean      high mean
                                                 std dev       low std dev   high std dev
