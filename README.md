@@ -3,6 +3,7 @@
 ![Cmake](https://github.com/sridharsridha/sorting/workflows/CMake/badge.svg)
 [![codecov](https://codecov.io/gh/sridharsridha/sorting/branch/master/graph/badge.svg)](https://codecov.io/gh/sridharsridha/sorting)
 ![language](https://img.shields.io/github/languages/top/sridharsridha/Sorting)
+![version](https://img.shields.io/github/v/tag/sridharsridha/Sorting?label=version&sort=semver)
 [![GitHub license](https://img.shields.io/github/license/sridharsridha/Sorting?style=plastic)](https://github.com/sridharsridha/Sorting/blob/master/LICENSE)
 
 Sorting algorithms implementation using C++ template metaprogramming as a headonly
