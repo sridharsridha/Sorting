@@ -267,7 +267,7 @@ Sorting is licensed under the [MIT license][license].  Copyright (c) 2020 Sridha
 [conan]: https://conan.io/
 [pip]: https://pip.pypa.io/en/stable/
 [cmake]: https://cmake.org/
-[catch2]: (https://github.com/catchorg/Catch2/blob/master/docs/tutorial.md)
+[catch2]: https://github.com/catchorg/Catch2/blob/master/docs/tutorial.md
 [catch2-benchmark]: https://github.com/catchorg/Catch2/blob/master/docs/benchmarks.md
 [google-benchmark]: https://github.com/google/benchmark#usage
 [troubleshoot]: ./TROUBLESHOOTING.md
