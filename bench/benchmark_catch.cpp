@@ -1,3 +1,4 @@
+#include "sorting_helper.hpp"
 #define CATCH_CONFIG_RUNNER
 #define CATCH_CONFIG_ENABLE_BENCHMARKING
 
@@ -8,22 +9,21 @@
 #include <sorting.hpp>
 #include <unordered_map>
 #include <vector>
-#include <iostream>
+
+#include "benchmark_helper.hpp"
 
 const int default_dataset_size = 10000;
 int num_elements = default_dataset_size;
 
 TEST_CASE("Benchmark random data", "[benchmark][random_data]") {
-  std::random_device rd;
-  std::mt19937 engine(rd());
-  std::uniform_int_distribution dist;
+  sri::RandomNumbers random;
 
   BENCHMARK_ADVANCED("Bubble Sort")(Catch::Benchmark::Chronometer meter) {
     // setup data for this run
     std::unordered_map<int, std::vector<int>> data;
     for (auto run = 0; run < meter.runs(); ++run) {
       for (auto elm = 0; elm < num_elements; ++elm) {
-        data[run].push_back(dist(engine));
+        data[run].push_back(random());
       }
     }
     meter.measure([&data](int i) {
@@ -37,11 +37,25 @@ TEST_CASE("Benchmark random data", "[benchmark][random_data]") {
     std::unordered_map<int, std::vector<int>> data;
     for (auto run = 0; run < meter.runs(); ++run) {
       for (auto elm = 0; elm < num_elements; ++elm) {
-        data[run].push_back(dist(engine));
+        data[run].push_back(random());
       }
     }
     meter.measure([&data](int i) {
       sri::selection_sort(data[i].begin(), data[i].end());
+      return data;
+    });
+  };
+
+  BENCHMARK_ADVANCED("Insertion Sort")(Catch::Benchmark::Chronometer meter) {
+    // setup data for this run
+    std::unordered_map<int, std::vector<int>> data;
+    for (auto run = 0; run < meter.runs(); ++run) {
+      for (auto elm = 0; elm < num_elements; ++elm) {
+        data[run].push_back(random());
+      }
+    }
+    meter.measure([&data](int i) {
+      sri::insertion_sort(data[i].begin(), data[i].end());
       return data;
     });
   };
@@ -51,7 +65,7 @@ TEST_CASE("Benchmark random data", "[benchmark][random_data]") {
     std::unordered_map<int, std::vector<int>> data;
     for (auto run = 0; run < meter.runs(); ++run) {
       for (auto elm = 0; elm < num_elements; ++elm) {
-        data[run].push_back(dist(engine));
+        data[run].push_back(random());
       }
     }
     meter.measure([&data](int i) {
@@ -66,7 +80,7 @@ TEST_CASE("Benchmark random data", "[benchmark][random_data]") {
     std::unordered_map<int, std::vector<int>> data;
     for (auto run = 0; run < meter.runs(); ++run) {
       for (auto elm = 0; elm < num_elements; ++elm) {
-        data[run].push_back(dist(engine));
+        data[run].push_back(random());
       }
     }
     meter.measure([&data](int i) {
@@ -101,6 +115,20 @@ TEST_CASE("Benchmark sorted (ascending) data", "[benchmark][sorted_data]") {
     }
     meter.measure([&data](int i) {
       sri::selection_sort(data[i].begin(), data[i].end());
+      return data;
+    });
+  };
+
+  BENCHMARK_ADVANCED("Insertion Sort")(Catch::Benchmark::Chronometer meter) {
+    // setup data for this run
+    std::unordered_map<int, std::vector<int>> data;
+    for (auto run = 0; run < meter.runs(); ++run) {
+      for (auto elm = 0; elm < num_elements; ++elm) {
+        data[run].push_back(elm);
+      }
+    }
+    meter.measure([&data](int i) {
+      sri::insertion_sort(data[i].begin(), data[i].end());
       return data;
     });
   };
@@ -164,6 +192,20 @@ TEST_CASE("Benchmark sorted (descending) data", "[benchmark][sorted_data]") {
     });
   };
 
+  BENCHMARK_ADVANCED("Insertion Sort")(Catch::Benchmark::Chronometer meter) {
+    // setup data for this run
+    std::unordered_map<int, std::vector<int>> data;
+    for (auto run = 0; run < meter.runs(); ++run) {
+      for (auto elm = num_elements; elm > 0; --elm) {
+        data[run].push_back(elm);
+      }
+    }
+    meter.measure([&data](int i) {
+      sri::insertion_sort(data[i].begin(), data[i].end());
+      return data;
+    });
+  };
+
   BENCHMARK_ADVANCED("std::sort Sort")(Catch::Benchmark::Chronometer meter) {
     // setup data for this run
     std::unordered_map<int, std::vector<int>> data;
@@ -197,7 +239,6 @@ TEST_CASE("Benchmark sorted (descending) data", "[benchmark][sorted_data]") {
 int main(int argc, char* argv[]) {
   Catch::Session session;  // There must be exactly one instance
 
-
   // Build a new parser on top of Catch's
   using namespace Catch::clara;
   auto cli =
@@ -213,6 +254,6 @@ int main(int argc, char* argv[]) {
     return returnCode;
   }
 
-  std::cout << "Dataset size is set as: " <<  num_elements << std::endl;
+  std::cout << "Dataset size is set as: " << num_elements << std::endl;
   return session.run();
 }

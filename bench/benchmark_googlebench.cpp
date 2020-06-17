@@ -1,178 +1,157 @@
 #include <benchmark/benchmark.h>
 
 #include <algorithm>
-#include <random>
 #include <sorting.hpp>
 #include <vector>
 
-#define SIZE 1024 << 6
+#include "benchmark_helper.hpp"
 
-static void BM_BaseInt(benchmark::State &state) {
-  std::random_device rd;
-  std::mt19937 mt(rd());
-  std::uniform_int_distribution<int> dist;
+#define SIZE 10000
 
+// Random Data test
+static void std_sort(benchmark::State &state) {
   for (auto _ : state) {
-    std::vector<int> v;
-    v.reserve(static_cast<size_t>(state.range(0)));
-    for (size_t i = 0; i < static_cast<size_t>(state.range(0)); i++) {
-      v.push_back(dist(mt));
-    }
+    std::vector<int> unsorted(
+        static_cast<std::vector<int>::size_type>(state.range(0)));
+    std::generate(unsorted.begin(), unsorted.end(), sri::RandomNumbers());
+    std::sort(unsorted.begin(), unsorted.end());
   }
 }
-BENCHMARK(BM_BaseInt)->Arg(SIZE);
+BENCHMARK(std_sort)->Arg(SIZE);
 
-static void BM_SortInt(benchmark::State &state) {
-  std::random_device rd;
-  std::mt19937 mt(rd());
-  std::uniform_int_distribution<int> dist;
-
+static void std_stable_sort(benchmark::State &state) {
   for (auto _ : state) {
-    std::vector<int> v;
-    v.reserve(static_cast<size_t>(state.range(0)));
-    for (size_t i = 0; i < static_cast<size_t>(state.range(0)); i++) {
-      v.push_back(dist(mt));
-    }
-    std::sort(v.begin(), v.end());
+    std::vector<int> unsorted(
+        static_cast<std::vector<int>::size_type>(state.range(0)));
+    std::generate(unsorted.begin(), unsorted.end(), sri::RandomNumbers());
+    std::stable_sort(unsorted.begin(), unsorted.end());
   }
 }
-BENCHMARK(BM_SortInt)->Arg(SIZE);
+BENCHMARK(std_stable_sort)->Arg(SIZE);
 
-static void BM_StableSortInt(benchmark::State &state) {
-  std::random_device rd;
-  std::mt19937 mt(rd());
-  std::uniform_int_distribution<int> dist;
-
+static void bubble_sort(benchmark::State &state) {
   for (auto _ : state) {
-    std::vector<int> v;
-    v.reserve(static_cast<size_t>(state.range(0)));
-    for (size_t i = 0; i < static_cast<size_t>(state.range(0)); i++) {
-      v.push_back(dist(mt));
-    }
-    std::stable_sort(v.begin(), v.end());
+    std::vector<int> unsorted(
+        static_cast<std::vector<int>::size_type>(state.range(0)));
+    std::generate(unsorted.begin(), unsorted.end(), sri::RandomNumbers());
+    sri::bubble_sort(unsorted.begin(), unsorted.end());
   }
 }
-BENCHMARK(BM_StableSortInt)->Arg(SIZE);
+BENCHMARK(bubble_sort)->Arg(SIZE);
 
-static void BM_BubbleSortInt(benchmark::State &state) {
-  std::random_device rd;
-  std::mt19937 mt(rd());
-  std::uniform_int_distribution<int> dist;
-
+static void selection_sort(benchmark::State &state) {
   for (auto _ : state) {
-    std::vector<int> v;
-    v.reserve(static_cast<size_t>(state.range(0)));
-    for (size_t i = 0; i < static_cast<size_t>(state.range(0)); i++) {
-      v.push_back(dist(mt));
-    }
-    sri::bubble_sort(v.begin(), v.end());
+    std::vector<int> unsorted(
+        static_cast<std::vector<int>::size_type>(state.range(0)));
+    std::generate(unsorted.begin(), unsorted.end(), sri::RandomNumbers());
+    sri::selection_sort(unsorted.begin(), unsorted.end());
   }
 }
-BENCHMARK(BM_BubbleSortInt)->Arg(SIZE);
+BENCHMARK(selection_sort)->Arg(SIZE);
 
-static void BM_SelectionSortInt(benchmark::State &state) {
-  std::random_device rd;
-  std::mt19937 mt(rd());
-  std::uniform_int_distribution<int> dist;
-
+static void insertion_sort(benchmark::State &state) {
   for (auto _ : state) {
-    std::vector<int> v;
-    v.reserve(static_cast<size_t>(state.range(0)));
-    for (size_t i = 0; i < static_cast<size_t>(state.range(0)); i++) {
-      v.push_back(dist(mt));
-    }
-    sri::selection_sort(v.begin(), v.end());
+    std::vector<int> unsorted(
+        static_cast<std::vector<int>::size_type>(state.range(0)));
+    std::generate(unsorted.begin(), unsorted.end(), sri::RandomNumbers());
+    sri::insertion_sort(unsorted.begin(), unsorted.end());
   }
 }
-BENCHMARK(BM_SelectionSortInt)->Arg(SIZE);
+BENCHMARK(insertion_sort)->Arg(SIZE);
 
-struct S {
-  int key;
-  int arr[4];
-};
-
-static void BM_BaseStruct(benchmark::State &state) {
-  std::random_device rd;
-  std::mt19937 mt(rd());
-  std::uniform_int_distribution<int> dist;
-
+// Sorted Ascending Data test
+static void std_sort_sorted_ascending(benchmark::State &state) {
   for (auto _ : state) {
-    std::vector<S> v;
-    v.reserve(static_cast<size_t>(state.range(0)));
-    for (size_t i = 0; i < static_cast<size_t>(state.range(0)); i++) {
-      v.push_back({dist(mt), {1}});
-    }
+    std::vector<int> sorted(static_cast<size_t>(state.range(0)));
+    std::iota(sorted.begin(), sorted.end(), 0);
+    std::sort(sorted.begin(), sorted.end());
   }
 }
-BENCHMARK(BM_BaseStruct)->Arg(SIZE);
+BENCHMARK(std_sort_sorted_ascending)->Arg(SIZE);
 
-static void BM_SortStruct(benchmark::State &state) {
-  std::random_device rd;
-  std::mt19937 mt(rd());
-  std::uniform_int_distribution<int> dist;
-
+static void std_stable_sort_sorted_ascending(benchmark::State &state) {
   for (auto _ : state) {
-    std::vector<S> v;
-    v.reserve(static_cast<size_t>(state.range(0)));
-    for (size_t i = 0; i < static_cast<size_t>(state.range(0)); i++) {
-      v.push_back({dist(mt), {1}});
-    }
-    std::sort(v.begin(), v.end(),
-              [](const S &a, const S &b) { return a.key < b.key; });
+    std::vector<int> sorted(static_cast<size_t>(state.range(0)));
+    std::iota(sorted.begin(), sorted.end(), 0);
+    std::stable_sort(sorted.begin(), sorted.end());
   }
 }
-BENCHMARK(BM_SortStruct)->Arg(SIZE);
+BENCHMARK(std_stable_sort_sorted_ascending)->Arg(SIZE);
 
-static void BM_StableSortStruct(benchmark::State &state) {
-  std::random_device rd;
-  std::mt19937 mt(rd());
-  std::uniform_int_distribution<int> dist;
-
+static void bubble_sort_sorted_ascending(benchmark::State &state) {
   for (auto _ : state) {
-    std::vector<S> v;
-    v.reserve(static_cast<size_t>(state.range(0)));
-    for (size_t i = 0; i < static_cast<size_t>(state.range(0)); i++) {
-      v.push_back({dist(mt), {1}});
-    }
-
-    std::stable_sort(v.begin(), v.end(),
-                     [](const S &a, const S &b) { return a.key < b.key; });
+    std::vector<int> sorted(static_cast<size_t>(state.range(0)));
+    std::iota(sorted.begin(), sorted.end(), 0);
+    sri::bubble_sort(sorted.begin(), sorted.end());
   }
 }
-BENCHMARK(BM_StableSortStruct)->Arg(SIZE);
+BENCHMARK(bubble_sort_sorted_ascending)->Arg(SIZE);
 
-static void BM_BubbleSortStruct(benchmark::State &state) {
-  std::random_device rd;
-  std::mt19937 mt(rd());
-  std::uniform_int_distribution<int> dist;
-
+static void selection_sort_sorted_ascending(benchmark::State &state) {
   for (auto _ : state) {
-    std::vector<S> v;
-    v.reserve(static_cast<size_t>(state.range(0)));
-    for (size_t i = 0; i < static_cast<size_t>(state.range(0)); i++) {
-      v.push_back({dist(mt), {1}});
-    }
-    sri::bubble_sort(v.begin(), v.end(),
-                     [](const S &a, const S &b) { return a.key < b.key; });
+    std::vector<int> sorted(static_cast<size_t>(state.range(0)));
+    std::iota(sorted.begin(), sorted.end(), 0);
+    sri::selection_sort(sorted.begin(), sorted.end());
   }
 }
-BENCHMARK(BM_BubbleSortStruct)->Arg(SIZE);
+BENCHMARK(selection_sort_sorted_ascending)->Arg(SIZE);
 
-static void BM_SelectionSortStruct(benchmark::State &state) {
-  std::random_device rd;
-  std::mt19937 mt(rd());
-  std::uniform_int_distribution<int> dist;
-
+static void insertion_sort_sorted_ascending(benchmark::State &state) {
   for (auto _ : state) {
-    std::vector<S> v;
-    v.reserve(static_cast<size_t>(state.range(0)));
-    for (size_t i = 0; i < static_cast<size_t>(state.range(0)); i++) {
-      v.push_back({dist(mt), {1}});
-    }
-    sri::selection_sort(v.begin(), v.end(),
-                        [](const S &a, const S &b) { return a.key < b.key; });
+    std::vector<int> sorted(static_cast<size_t>(state.range(0)));
+    std::iota(sorted.begin(), sorted.end(), 0);
+    sri::insertion_sort(sorted.begin(), sorted.end());
   }
 }
-BENCHMARK(BM_SelectionSortStruct)->Arg(SIZE);
+BENCHMARK(insertion_sort_sorted_ascending)->Arg(SIZE);
 
-BENCHMARK_MAIN();
+// Sorted Descending Data test
+static void std_sort_sorted_descending(benchmark::State &state) {
+  for (auto _ : state) {
+    std::vector<int> sorted(static_cast<size_t>(state.range(0)));
+    std::for_each(sorted.begin(), sorted.end(),
+                  [i = state.range(0)](int &x) mutable { x = static_cast<int>(i--); });
+    std::sort(sorted.begin(), sorted.end());
+  }
+}
+BENCHMARK(std_sort_sorted_descending)->Arg(SIZE);
+
+static void std_stable_sort_sorted_descending(benchmark::State &state) {
+  for (auto _ : state) {
+    std::vector<int> sorted(static_cast<size_t>(state.range(0)));
+    std::for_each(sorted.begin(), sorted.end(),
+                  [i = state.range(0)](int &x) mutable { x = static_cast<int>(i--); });
+    std::stable_sort(sorted.begin(), sorted.end());
+  }
+}
+BENCHMARK(std_stable_sort_sorted_descending)->Arg(SIZE);
+
+static void bubble_sort_sorted_descending(benchmark::State &state) {
+  for (auto _ : state) {
+    std::vector<int> sorted(static_cast<size_t>(state.range(0)));
+    std::for_each(sorted.begin(), sorted.end(),
+                  [i = state.range(0)](int &x) mutable { x = static_cast<int>(i--); });
+    sri::bubble_sort(sorted.begin(), sorted.end());
+  }
+}
+BENCHMARK(bubble_sort_sorted_descending)->Arg(SIZE);
+
+static void selection_sort_sorted_descending(benchmark::State &state) {
+  for (auto _ : state) {
+    std::vector<int> sorted(static_cast<size_t>(state.range(0)));
+    std::for_each(sorted.begin(), sorted.end(),
+                  [i = state.range(0)](int &x) mutable { x = static_cast<int>(i--); });
+    sri::selection_sort(sorted.begin(), sorted.end());
+  }
+}
+BENCHMARK(selection_sort_sorted_descending)->Arg(SIZE);
+
+static void insertion_sort_sorted_descending(benchmark::State &state) {
+  for (auto _ : state) {
+    std::vector<int> sorted(static_cast<size_t>(state.range(0)));
+    std::for_each(sorted.begin(), sorted.end(),
+                  [i = state.range(0)](int &x) mutable { x = static_cast<int>(i--); });
+    sri::insertion_sort(sorted.begin(), sorted.end());
+  }
+}
+BENCHMARK(insertion_sort_sorted_descending)->Arg(SIZE);
