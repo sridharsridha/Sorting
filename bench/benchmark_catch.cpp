@@ -18,6 +18,35 @@ int num_elements = default_dataset_size;
 TEST_CASE("Benchmark random data", "[benchmark][random_data]") {
   sri::RandomNumbers random;
 
+  BENCHMARK_ADVANCED("std::sort (Quick sort)")(Catch::Benchmark::Chronometer meter) {
+    // setup data for this run
+    std::unordered_map<int, std::vector<int>> data;
+    for (auto run = 0; run < meter.runs(); ++run) {
+      for (auto elm = 0; elm < num_elements; ++elm) {
+        data[run].push_back(random());
+      }
+    }
+    meter.measure([&data](int i) {
+      std::sort(data[i].begin(), data[i].end());
+      return data;
+    });
+  };
+
+  BENCHMARK_ADVANCED("std::stable_sort (Merge sort)")
+  (Catch::Benchmark::Chronometer meter) {
+    // setup data for this run
+    std::unordered_map<int, std::vector<int>> data;
+    for (auto run = 0; run < meter.runs(); ++run) {
+      for (auto elm = 0; elm < num_elements; ++elm) {
+        data[run].push_back(random());
+      }
+    }
+    meter.measure([&data](int i) {
+      std::stable_sort(data[i].begin(), data[i].end());
+      return data;
+    });
+  };
+
   BENCHMARK_ADVANCED("Bubble Sort")(Catch::Benchmark::Chronometer meter) {
     // setup data for this run
     std::unordered_map<int, std::vector<int>> data;
@@ -60,7 +89,7 @@ TEST_CASE("Benchmark random data", "[benchmark][random_data]") {
     });
   };
 
-  BENCHMARK_ADVANCED("std::sort Sort")(Catch::Benchmark::Chronometer meter) {
+  BENCHMARK_ADVANCED("Merge Sort")(Catch::Benchmark::Chronometer meter) {
     // setup data for this run
     std::unordered_map<int, std::vector<int>> data;
     for (auto run = 0; run < meter.runs(); ++run) {
@@ -69,13 +98,12 @@ TEST_CASE("Benchmark random data", "[benchmark][random_data]") {
       }
     }
     meter.measure([&data](int i) {
-      std::sort(data[i].begin(), data[i].end());
+      sri::merge_sort(data[i].begin(), data[i].end());
       return data;
     });
   };
 
-  BENCHMARK_ADVANCED("std::stable_sort Sort")
-  (Catch::Benchmark::Chronometer meter) {
+  BENCHMARK_ADVANCED("Iterative Merge Sort")(Catch::Benchmark::Chronometer meter) {
     // setup data for this run
     std::unordered_map<int, std::vector<int>> data;
     for (auto run = 0; run < meter.runs(); ++run) {
@@ -84,13 +112,44 @@ TEST_CASE("Benchmark random data", "[benchmark][random_data]") {
       }
     }
     meter.measure([&data](int i) {
-      std::stable_sort(data[i].begin(), data[i].end());
+      sri::merge_sort_i(data[i].begin(), data[i].end());
       return data;
     });
   };
+
 }
 
 TEST_CASE("Benchmark sorted (ascending) data", "[benchmark][sorted_data]") {
+
+  BENCHMARK_ADVANCED("std::sort (Quick Sort)")(Catch::Benchmark::Chronometer meter) {
+    // setup data for this run
+    std::unordered_map<int, std::vector<int>> data;
+    for (auto run = 0; run < meter.runs(); ++run) {
+      for (auto elm = 0; elm < num_elements; ++elm) {
+        data[run].push_back(elm);
+      }
+    }
+    meter.measure([&data](int i) {
+      std::sort(data[i].begin(), data[i].end());
+      return data;
+    });
+  };
+
+  BENCHMARK_ADVANCED("std::stable_sort (Merge Sort)")
+  (Catch::Benchmark::Chronometer meter) {
+    // setup data for this run
+    std::unordered_map<int, std::vector<int>> data;
+    for (auto run = 0; run < meter.runs(); ++run) {
+      for (auto elm = 0; elm < num_elements; ++elm) {
+        data[run].push_back(elm);
+      }
+    }
+    meter.measure([&data](int i) {
+      std::stable_sort(data[i].begin(), data[i].end());
+      return data;
+    });
+  };
+
   BENCHMARK_ADVANCED("Bubble Sort")(Catch::Benchmark::Chronometer meter) {
     // setup data for this run
     std::unordered_map<int, std::vector<int>> data;
@@ -133,7 +192,7 @@ TEST_CASE("Benchmark sorted (ascending) data", "[benchmark][sorted_data]") {
     });
   };
 
-  BENCHMARK_ADVANCED("std::sort Sort")(Catch::Benchmark::Chronometer meter) {
+  BENCHMARK_ADVANCED("Merge Sort")(Catch::Benchmark::Chronometer meter) {
     // setup data for this run
     std::unordered_map<int, std::vector<int>> data;
     for (auto run = 0; run < meter.runs(); ++run) {
@@ -142,13 +201,12 @@ TEST_CASE("Benchmark sorted (ascending) data", "[benchmark][sorted_data]") {
       }
     }
     meter.measure([&data](int i) {
-      std::sort(data[i].begin(), data[i].end());
+      sri::merge_sort(data[i].begin(), data[i].end());
       return data;
     });
   };
 
-  BENCHMARK_ADVANCED("std::stable_sort Sort")
-  (Catch::Benchmark::Chronometer meter) {
+  BENCHMARK_ADVANCED("Iterative merge Sort")(Catch::Benchmark::Chronometer meter) {
     // setup data for this run
     std::unordered_map<int, std::vector<int>> data;
     for (auto run = 0; run < meter.runs(); ++run) {
@@ -157,13 +215,43 @@ TEST_CASE("Benchmark sorted (ascending) data", "[benchmark][sorted_data]") {
       }
     }
     meter.measure([&data](int i) {
-      std::stable_sort(data[i].begin(), data[i].end());
+      sri::merge_sort_i(data[i].begin(), data[i].end());
       return data;
     });
   };
+
 }
 
 TEST_CASE("Benchmark sorted (descending) data", "[benchmark][sorted_data]") {
+
+  BENCHMARK_ADVANCED("std::sort (Quick Sort)")(Catch::Benchmark::Chronometer meter) {
+    // setup data for this run
+    std::unordered_map<int, std::vector<int>> data;
+    for (auto run = 0; run < meter.runs(); ++run) {
+      for (auto elm = num_elements; elm > 0; --elm) {
+        data[run].push_back(elm);
+      }
+    }
+    meter.measure([&data](int i) {
+      std::sort(data[i].begin(), data[i].end());
+      return data;
+    });
+  };
+
+  BENCHMARK_ADVANCED("std::stable_sort (Merge Sort)")
+  (Catch::Benchmark::Chronometer meter) {
+    // setup data for this run
+    std::unordered_map<int, std::vector<int>> data;
+    for (auto run = 0; run < meter.runs(); ++run) {
+      for (auto elm = num_elements; elm > 0; --elm) {
+        data[run].push_back(elm);
+      }
+    }
+    meter.measure([&data](int i) {
+      std::stable_sort(data[i].begin(), data[i].end());
+      return data;
+    });
+  };
   BENCHMARK_ADVANCED("Bubble Sort")(Catch::Benchmark::Chronometer meter) {
     // setup data for this run
     std::unordered_map<int, std::vector<int>> data;
@@ -206,21 +294,7 @@ TEST_CASE("Benchmark sorted (descending) data", "[benchmark][sorted_data]") {
     });
   };
 
-  BENCHMARK_ADVANCED("std::sort Sort")(Catch::Benchmark::Chronometer meter) {
-    // setup data for this run
-    std::unordered_map<int, std::vector<int>> data;
-    for (auto run = 0; run < meter.runs(); ++run) {
-      for (auto elm = num_elements; elm > 0; --elm) {
-        data[run].push_back(elm);
-      }
-    }
-    meter.measure([&data](int i) {
-      std::sort(data[i].begin(), data[i].end());
-      return data;
-    });
-  };
-
-  BENCHMARK_ADVANCED("std::stable_sort Sort")
+  BENCHMARK_ADVANCED("Merge Sort")
   (Catch::Benchmark::Chronometer meter) {
     // setup data for this run
     std::unordered_map<int, std::vector<int>> data;
@@ -230,7 +304,22 @@ TEST_CASE("Benchmark sorted (descending) data", "[benchmark][sorted_data]") {
       }
     }
     meter.measure([&data](int i) {
-      std::stable_sort(data[i].begin(), data[i].end());
+      sri::merge_sort(data[i].begin(), data[i].end());
+      return data;
+    });
+  };
+
+  BENCHMARK_ADVANCED("Iterative merge Sort")
+  (Catch::Benchmark::Chronometer meter) {
+    // setup data for this run
+    std::unordered_map<int, std::vector<int>> data;
+    for (auto run = 0; run < meter.runs(); ++run) {
+      for (auto elm = num_elements; elm > 0; --elm) {
+        data[run].push_back(elm);
+      }
+    }
+    meter.measure([&data](int i) {
+      sri::merge_sort_i(data[i].begin(), data[i].end());
       return data;
     });
   };

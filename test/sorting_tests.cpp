@@ -5,8 +5,12 @@
 #include <random>
 #include <sorting.hpp>
 #include <vector>
+#include <unordered_map>
 
 #include "sorting_tests.hpp"
+
+template <class Iter, class Comp>
+using sorting_function = void(*)(Iter first, Iter last, Comp comp);
 
 TEST_CASE("Sorting test sorted (ascending order) data",
           "[sorting_tests.sorted_data.ascending]") {
@@ -27,6 +31,14 @@ TEST_CASE("Sorting test sorted (ascending order) data",
   }
   SECTION("Insertion sort") {
     sri::insertion_sort(actual.begin(), actual.end());
+    REQUIRE_THAT(actual, Equals(sorted));
+  }
+  SECTION("Merge sort") {
+    sri::merge_sort(actual.begin(), actual.end());
+    REQUIRE_THAT(actual, Equals(sorted));
+  }
+  SECTION("Iterative Merge sort") {
+    sri::merge_sort_i(actual.begin(), actual.end());
     REQUIRE_THAT(actual, Equals(sorted));
   }
 }
@@ -53,6 +65,14 @@ TEST_CASE("Sorting test sorted (descending order) data",
     sri::insertion_sort(actual.begin(), actual.end(), std::greater<>());
     REQUIRE_THAT(actual, Equals(sorted));
   }
+  SECTION("Merge sort") {
+    sri::merge_sort(actual.begin(), actual.end(), std::greater<>());
+    REQUIRE_THAT(actual, Equals(sorted));
+  }
+  SECTION("Iterative merge sort") {
+    sri::merge_sort_i(actual.begin(), actual.end(), std::greater<>());
+    REQUIRE_THAT(actual, Equals(sorted));
+  }
 }
 
 TEST_CASE("Sorting test random data", "[sorting_tests.random_data]") {
@@ -64,16 +84,24 @@ TEST_CASE("Sorting test random data", "[sorting_tests.random_data]") {
   std::vector<int> sorted(unsorted);
   std::sort(sorted.begin(), sorted.end());
 
-  SECTION("Bubble sort random data") {
+  SECTION("Bubble sort") {
     sri::bubble_sort(unsorted.begin(), unsorted.end());
     REQUIRE_THAT(unsorted, Equals(sorted));
   }
-  SECTION("Selection sort random data") {
+  SECTION("Selection sort") {
     sri::selection_sort(unsorted.begin(), unsorted.end());
     REQUIRE_THAT(unsorted, Equals(sorted));
   }
-  SECTION("Insertion sort random data") {
+  SECTION("Insertion sort") {
     sri::insertion_sort(unsorted.begin(), unsorted.end());
+    REQUIRE_THAT(unsorted, Equals(sorted));
+  }
+  SECTION("Merge sort") {
+    sri::merge_sort(unsorted.begin(), unsorted.end());
+    REQUIRE_THAT(unsorted, Equals(sorted));
+  }
+  SECTION("Iterative merge sort") {
+    sri::merge_sort_i(unsorted.begin(), unsorted.end());
     REQUIRE_THAT(unsorted, Equals(sorted));
   }
 }
@@ -107,16 +135,24 @@ TEST_CASE("Sorting test struct data", "[sorting_tests.struct_data]") {
   std::vector<TestData> sorted(unsorted);
   std::sort(sorted.begin(), sorted.end());
 
-  SECTION("Bubble sort random data") {
+  SECTION("Bubble sort") {
     sri::bubble_sort(unsorted.begin(), unsorted.end());
     REQUIRE_THAT(unsorted, Equals(sorted));
   }
-  SECTION("Selection sort random data") {
+  SECTION("Selection sort") {
     sri::selection_sort(unsorted.begin(), unsorted.end());
     REQUIRE_THAT(unsorted, Equals(sorted));
   }
-  SECTION("Insertion sort random data") {
+  SECTION("Insertion sort") {
     sri::insertion_sort(unsorted.begin(), unsorted.end());
+    REQUIRE_THAT(unsorted, Equals(sorted));
+  }
+  SECTION("Merge sort") {
+    sri::merge_sort(unsorted.begin(), unsorted.end());
+    REQUIRE_THAT(unsorted, Equals(sorted));
+  }
+  SECTION("Iterative merge sort") {
+    sri::merge_sort_i(unsorted.begin(), unsorted.end());
     REQUIRE_THAT(unsorted, Equals(sorted));
   }
 }
