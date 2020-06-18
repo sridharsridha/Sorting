@@ -9,8 +9,6 @@
 
 #include "sorting_tests.hpp"
 
-template <class Iter, class Comp>
-using sorting_function = void(*)(Iter first, Iter last, Comp comp);
 
 TEST_CASE("Sorting test sorted (ascending order) data",
           "[sorting_tests.sorted_data.ascending]") {
@@ -77,10 +75,11 @@ TEST_CASE("Sorting test sorted (descending order) data",
 
 TEST_CASE("Sorting test random data", "[sorting_tests.random_data]") {
   using Catch::Matchers::Equals;
+  sri::RandomNumbers random;
   auto size = GENERATE(0, 1, 2, 5, 100);
 
   std::vector<int> unsorted(static_cast<std::vector<int>::size_type>(size));
-  std::generate(unsorted.begin(), unsorted.end(), sri::RandomNumbers());
+  std::generate(unsorted.begin(), unsorted.end(), random);
   std::vector<int> sorted(unsorted);
   std::sort(sorted.begin(), sorted.end());
 
@@ -106,31 +105,14 @@ TEST_CASE("Sorting test random data", "[sorting_tests.random_data]") {
   }
 }
 
-struct TestData {
- public:
-  explicit TestData(int k, std::string s) : m_key(k), m_data(std::move(s)){};
-  bool operator<(const TestData& x) const { return m_key < x.m_key; }
-  bool operator==(const TestData& x) const { return m_key == x.m_key; }
-  bool operator!=(const TestData& x) const { return !(m_key == x.m_key); }
-  [[nodiscard]] int key() const { return m_key; }
-  [[maybe_unused]] [[nodiscard]] std::string data() const { return m_data; }
-
- private:
-  int m_key;
-  std::string m_data;
-};
-
 TEST_CASE("Sorting test struct data", "[sorting_tests.struct_data]") {
   using Catch::Matchers::Equals;
+  sri::RandomNumbers random;
   auto size = GENERATE(0, 1, 2, 5, 100);
-  std::random_device rd;
-  std::mt19937 engine(rd());
-  std::uniform_int_distribution<int> dist;
-
   std::vector<TestData> unsorted;
   unsorted.reserve(static_cast<std::vector<TestData>::size_type>(size));
   for (auto i = 0; i < size; i++) {
-    unsorted.emplace_back(dist(engine), "hello");
+    unsorted.emplace_back(random(), "hello");
   }
   std::vector<TestData> sorted(unsorted);
   std::sort(sorted.begin(), sorted.end());
