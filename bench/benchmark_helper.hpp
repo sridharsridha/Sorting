@@ -1,5 +1,9 @@
-#ifndef __SORTING_HELPER_HPP
-#define __SORTING_HELPER_HPP
+//
+// Created by Sridhar N on 28/06/20.
+//
+
+#ifndef SORTING_BENCHMARK_HELPER_HPP
+#define SORTING_BENCHMARK_HELPER_HPP
 
 #include <random>
 
@@ -19,4 +23,4 @@ class RandomNumbers {
 
 }  // namespace sri
 
-#endif
+#endif  // SORTING_BENCHMARK_HELPER_HPP
